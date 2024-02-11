@@ -9,3 +9,18 @@ button, [type="button"], [type="reset"], [type="submit"]
 	border: 1px solid black;
 	padding: 5px;
 }
+
+button.add
+{
+	background-color: aquamarine;
+}
+
+button.remove
+{
+	background-color: crimson;
+}
+
+p a
+{
+	text-decoration: underline;
+}
