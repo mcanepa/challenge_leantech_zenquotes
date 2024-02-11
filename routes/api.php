@@ -20,4 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get("quotes", [QuoteController::class, "api_five"])->name("api.quote.five");
+Route::get("quotes/new", [QuoteController::class, "api_five_new"])->name("api.quote.five-new");
 Route::get("secure-quotes", [QuoteController::class, "api_ten"])->name("api.quote.ten");
+Route::get("secure-quotes/new", [QuoteController::class, "api_ten_new"])->name("api.quote.ten-new");
