@@ -5,62 +5,38 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreQuoteRequest;
 use App\Http\Requests\UpdateQuoteRequest;
 use App\Models\Quote;
+use Illuminate\Support\Facades\Cache;
 
 class QuoteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private function getRandomQuote()
     {
-        //
+        $data = Quote::inRandomOrder()->take(1)->get();
+
+        return $data[0]->toArray();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function today()
     {
-        //
-    }
+        $data = [];
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreQuoteRequest $request)
-    {
-        //
-    }
+        if(Cache::has("today"))
+        {
+            $data["cache"] = true;
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Quote $quote)
-    {
-        //
-    }
+            $data["quotes"] = Cache::get("today");
+        }
+        else
+        {
+            $data["cache"] = false;
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Quote $quote)
-    {
-        //
-    }
+            $quote = $this->getRandomQuote();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateQuoteRequest $request, Quote $quote)
-    {
-        //
-    }
+            $data["quotes"] = $quote;
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Quote $quote)
-    {
-        //
+            Cache::put("today", $quote, intval(env("DEFAULT_CACHE_TTL")));
+        }
+
+        return view("quotes.today", compact("data"));
     }
 }
