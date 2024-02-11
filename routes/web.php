@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get("/", [QuoteController::class, "today"])->name("quote.index");
 Route::get("today", [QuoteController::class, "today"])->name("quote.today");
+Route::get("today/new", [QuoteController::class, "new"])->name("quote.new");

@@ -39,4 +39,11 @@ class QuoteController extends Controller
 
         return view("quotes.today", compact("data"));
     }
+
+    public function new()
+    {
+        Cache::forget("today"); //clear cache
+
+        return $this->today(); //get a new quote
+    }
 }
