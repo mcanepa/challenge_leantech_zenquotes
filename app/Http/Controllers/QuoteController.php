@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\Cache;
 
 class QuoteController extends Controller
 {
-    private function getRandomQuote()
+    //Get random quotes
+    private function getRandomQuotes($quantity)
     {
-        $data = Quote::inRandomOrder()->take(1)->get();
+        $data = Quote::inRandomOrder()->take($quantity)->get();
 
-        return $data[0]->toArray();
+        return $data->toArray();
     }
 
     public function today()
@@ -24,15 +25,16 @@ class QuoteController extends Controller
 
         if(Cache::has("today"))
         {
-            $data["cache"] = true;
-
             $data["quotes"] = Cache::get("today");
+
+            foreach($data["quotes"] as $key => $value)
+            {
+                $data["quotes"][$key]["cache"] = true;
+            }
         }
         else
         {
-            $data["cache"] = false;
-
-            $quote = $this->getRandomQuote();
+            $quote = $this->getRandomQuotes(1);
 
             $data["quotes"] = $quote;
 
@@ -83,5 +85,38 @@ class QuoteController extends Controller
         $quotes = $user->quotes()->get();
 
         return view("quotes.favorites", compact("quotes"));
+    }
+
+    public function five()
+    {
+        $data = [];
+
+        if(Cache::has("five"))
+        {
+            $data["quotes"] = Cache::get("five");
+
+            foreach($data["quotes"] as $key => $value)
+            {
+                $data["quotes"][$key]["cache"] = true;
+            }
+        }
+        else
+        {
+            $quotes = $this->getRandomQuotes(5);
+
+            $data["quotes"] = $quotes;
+
+            Cache::put("five", $quotes, intval(env("DEFAULT_CACHE_TTL")));
+
+        }
+
+        return view("quotes.five", compact("data"));
+    }
+
+    public function five_new()
+    {
+        Cache::forget("five"); //clear cache
+
+        return $this->five(); //get a new quote
     }
 }

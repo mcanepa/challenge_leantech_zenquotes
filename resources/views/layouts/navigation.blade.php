@@ -15,6 +15,9 @@
                     <x-nav-link :href="route('quote.today')" :active="request()->routeIs('quote.today')">
                         {{ __('Quote of the day') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('quote.five')" :active="request()->routeIs('quote.five')">
+                        {{ __('Five quotes') }}
+                    </x-nav-link>
                 </div>
             </div>
 
