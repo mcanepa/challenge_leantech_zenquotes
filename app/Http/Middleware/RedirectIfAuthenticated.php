@@ -19,12 +19,31 @@ class RedirectIfAuthenticated
     {
         $guards = empty($guards) ? [null] : $guards;
 
-        foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+        foreach($guards as $guard)
+        {
+            if(Auth::guard($guard)->check())
+            {
+                // Determine the intended redirection route based on the original route
+                $routeName = $request->route()->getName();
+
+                $redirectRoute = $this->getRedirectRoute($routeName);
+
+                return redirect($redirectRoute);
             }
         }
 
         return $next($request);
+    }
+
+    //Get the redirection route based on the original route.
+    private function getRedirectRoute($routeName)
+    {
+        // Define the mapping of routes to redirect routes
+        $routeMappings = [
+            'quote.five' => route('quote.ten'),
+        ];
+
+        // Return the redirection route based on the original route, or fallback to default route
+        return $routeMappings[$routeName] ?? RouteServiceProvider::HOME;
     }
 }

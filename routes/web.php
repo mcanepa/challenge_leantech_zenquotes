@@ -35,9 +35,9 @@ Route::get("today/new", [QuoteController::class, "new"])->name("quote.new");
 Route::post("favorite-add", [QuoteController::class, "favorite_add"])->name("quote.favorite-add");
 Route::post("favorite-remove", [QuoteController::class, "favorite_remove"])->name("quote.favorite-remove");
 Route::get("favorite-quotes", [QuoteController::class, "favorite_quotes"])->name("quote.favorite-quotes")->middleware('host');
-Route::get("quotes", [QuoteController::class, "five"])->name("quote.five");
+Route::get("quotes", [QuoteController::class, "five"])->name("quote.five")->middleware('guest');
 Route::get("quotes/new", [QuoteController::class, "five_new"])->name("quote.five-new");
-Route::get("secure-quotes", [QuoteController::class, "ten"])->name("quote.ten");
+Route::get("secure-quotes", [QuoteController::class, "ten"])->name("quote.ten")->middleware('host');
 Route::get("secure-quotes/new", [QuoteController::class, "ten_new"])->name("quote.ten-new");
 
 require __DIR__.'/auth.php';

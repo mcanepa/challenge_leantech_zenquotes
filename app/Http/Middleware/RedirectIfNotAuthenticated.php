@@ -39,7 +39,8 @@ class RedirectIfNotAuthenticated
     {
         // Define the mapping of routes to redirect routes
         $routeMappings = [
-            'quote.favorite-quotes' => route('quote.today'),
+            'quote.favorite-quotes' => route('quote.five'),
+            'quote.ten' => route('quote.five'),
         ];
 
         // Return the redirection route based on the original route, or fallback to default route
