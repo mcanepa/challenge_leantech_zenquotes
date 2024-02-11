@@ -49,6 +49,7 @@ class QuoteController extends Controller
         return $this->today(); //get a new quote
     }
 
+    //add selected quote to list for current user
     public function favorite_add(Request $request)
     {
         $user = Auth::user();
@@ -61,6 +62,7 @@ class QuoteController extends Controller
         return redirect()->route("quote.favorite-quotes");
     }
 
+    //remove selected quote from list for current user
     public function favorite_remove(Request $request)
     {
         $user = Auth::user();
@@ -73,6 +75,7 @@ class QuoteController extends Controller
         return redirect()->route("quote.favorite-quotes");
     }
 
+    //get list of favorites for current user
     public function favorite_quotes()
     {
         $user = Auth::user();
