@@ -1,3 +1,5 @@
+<x-app-layout>
+
 @php
 $quote = json_decode($data["quotes"]["data"], true)
 @endphp
@@ -6,3 +8,4 @@ $quote = json_decode($data["quotes"]["data"], true)
 <h1>@if($data["cache"]) [cache] @endif{{ $quote["q"] }}</h1>
 
 <img src="https://zenquotes.io/api/image">
+</x-app-layout>
