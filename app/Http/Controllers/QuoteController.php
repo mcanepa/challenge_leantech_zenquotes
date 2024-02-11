@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreQuoteRequest;
 use App\Http\Requests\UpdateQuoteRequest;
 use App\Models\Quote;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -154,5 +155,12 @@ class QuoteController extends Controller
         Cache::forget("ten"); //clear cache
 
         return $this->ten(); //get 10 new quotes
+    }
+
+    public function report()
+    {
+        $users = User::with("quotes")->get();
+
+        return view("quotes.report", compact("users"));
     }
 }

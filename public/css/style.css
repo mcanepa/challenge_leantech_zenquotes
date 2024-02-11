@@ -29,3 +29,15 @@ p
 {
 	margin: 15px auto;
 }
+
+table.report
+{
+	border: 2px solid gainsboro;
+	border-collapse: separate;
+	border-spacing: 5px;
+}
+
+table.report td
+{
+	border: 2px solid gainsboro;
+}
