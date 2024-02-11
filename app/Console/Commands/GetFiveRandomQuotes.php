@@ -45,7 +45,10 @@ class GetFiveRandomQuotes extends Command
         // Decode JSON response
         $data = json_decode($jsonResponse, true);
 
+        // Proper attribution
+        $attribution = 'Inspirational quotes provided by <a href="https://zenquotes.io/" target="_blank">ZenQuotes API</a>';
+
         // Output the JSON response
-        $this->info(json_encode($data, JSON_PRETTY_PRINT));
+        $this->info(json_encode($data, JSON_PRETTY_PRINT) . $attribution);
     }
 }
