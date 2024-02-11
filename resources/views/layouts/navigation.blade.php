@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('quote.five')" :active="request()->routeIs('quote.five')">
                         {{ __('Five quotes') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('quote.ten')" :active="request()->routeIs('quote.ten')">
+                        {{ __('Ten quotes') }}
+                    </x-nav-link>
                 </div>
             </div>
 

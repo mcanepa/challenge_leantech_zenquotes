@@ -87,6 +87,7 @@ class QuoteController extends Controller
         return view("quotes.favorites", compact("quotes"));
     }
 
+    //get 5 random quotes
     public function five()
     {
         $data = [];
@@ -113,10 +114,45 @@ class QuoteController extends Controller
         return view("quotes.five", compact("data"));
     }
 
+    //get 5 new random quotes
     public function five_new()
     {
         Cache::forget("five"); //clear cache
 
-        return $this->five(); //get a new quote
+        return $this->five(); //get 5 new quotes
+    }
+
+    //get 10 random quotes
+    public function ten()
+    {
+        $data = [];
+
+        if(Cache::has("ten"))
+        {
+            $data["quotes"] = Cache::get("ten");
+
+            foreach($data["quotes"] as $key => $value)
+            {
+                $data["quotes"][$key]["cache"] = true;
+            }
+        }
+        else
+        {
+            $quotes = $this->getRandomQuotes(10);
+
+            $data["quotes"] = $quotes;
+
+            Cache::put("ten", $quotes, intval(env("DEFAULT_CACHE_TTL")));
+        }
+
+        return view("quotes.ten", compact("data"));
+    }
+
+    //get 10 new random quotes
+    public function ten_new()
+    {
+        Cache::forget("ten"); //clear cache
+
+        return $this->ten(); //get 10 new quotes
     }
 }
