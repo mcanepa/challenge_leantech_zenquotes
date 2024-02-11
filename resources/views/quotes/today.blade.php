@@ -1,12 +1,11 @@
 <x-app-layout>
 	@php
-		$cache = $data["quotes"][0]["cache"] ?? false;
 		$quote = json_decode($data["quotes"][0]["data"], true)
 	@endphp
 
 	<a href="{{ route('quote.new') }}"><button type="button">Get a new quote</button></a>
 
-	<h1>@if($cache) [cached] @endif {{ $quote["q"] }}</h1>
+	<h1>{{ $quote["q"] }}</h1>
 
 	<form action="{{ route('quote.favorite-add') }}" method="post">
 		@csrf

@@ -3,10 +3,9 @@
 
 	@foreach($data["quotes"] as $quote)
 		@php
-			$cache = $quote["cache"] ?? false;
 			$quote = json_decode($quote["data"], true)
 		@endphp
 
-		<p>quote #{{ ($loop->index) + 1}}: @if($cache) [cached] @endif {{ $quote["q"] }}</p>
+		<p>quote #{{ ($loop->index) + 1}}: {{ $quote["q"] }}</p>
 	@endforeach
 </x-app-layout>

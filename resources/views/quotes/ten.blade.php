@@ -11,12 +11,11 @@
 		<tbody>
 			@foreach($data["quotes"] as $quote)
 				@php
-					$cache = $quote["cache"] ?? false;
 					$quote_data = json_decode($quote["data"], true)
 				@endphp
 
 				<tr>
-					<td>quote #{{ ($loop->index) + 1}}: @if($cache) [cached] @endif {{ $quote_data["q"] }} </td>
+					<td>quote #{{ ($loop->index) + 1}}: {{ $quote_data["q"] }} </td>
 					<td>
 						<form action="{{ route('quote.favorite-add') }}" method="post">
 							@csrf

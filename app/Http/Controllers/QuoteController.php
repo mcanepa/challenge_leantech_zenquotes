@@ -28,10 +28,7 @@ class QuoteController extends Controller
         {
             $data["quotes"] = Cache::get("today");
 
-            foreach($data["quotes"] as $key => $value)
-            {
-                $data["quotes"][$key]["cache"] = true;
-            }
+            $this->flag_cache($data);
         }
         else
         {
@@ -91,26 +88,7 @@ class QuoteController extends Controller
     //get 5 random quotes
     public function five()
     {
-        $data = [];
-
-        if(Cache::has("five"))
-        {
-            $data["quotes"] = Cache::get("five");
-
-            foreach($data["quotes"] as $key => $value)
-            {
-                $data["quotes"][$key]["cache"] = true;
-            }
-        }
-        else
-        {
-            $quotes = $this->getRandomQuotes(5);
-
-            $data["quotes"] = $quotes;
-
-            Cache::put("five", $quotes, intval(env("DEFAULT_CACHE_TTL")));
-
-        }
+        $data = $this->get_five();
 
         return view("quotes.five", compact("data"));
     }
@@ -126,25 +104,7 @@ class QuoteController extends Controller
     //get 10 random quotes
     public function ten()
     {
-        $data = [];
-
-        if(Cache::has("ten"))
-        {
-            $data["quotes"] = Cache::get("ten");
-
-            foreach($data["quotes"] as $key => $value)
-            {
-                $data["quotes"][$key]["cache"] = true;
-            }
-        }
-        else
-        {
-            $quotes = $this->getRandomQuotes(10);
-
-            $data["quotes"] = $quotes;
-
-            Cache::put("ten", $quotes, intval(env("DEFAULT_CACHE_TTL")));
-        }
+        $data = $this->get_ten();
 
         return view("quotes.ten", compact("data"));
     }
@@ -162,5 +122,85 @@ class QuoteController extends Controller
         $users = User::with("quotes")->get();
 
         return view("quotes.report", compact("users"));
+    }
+
+    private function get_five()
+    {
+        $data = [];
+
+        if(Cache::has("five"))
+        {
+            $data["quotes"] = Cache::get("five");
+
+            $this->flag_cache($data);
+        }
+        else
+        {
+            $quotes = $this->getRandomQuotes(5);
+
+            $data["quotes"] = $quotes;
+
+            Cache::put("five", $quotes, intval(env("DEFAULT_CACHE_TTL")));
+        }
+
+        return $data;
+    }
+
+    public function api_five()
+    {
+        return $this->get_five();
+    }
+
+    public function api_five_new()
+    {
+        Cache::forget("five");
+
+        return $this->api_five();
+    }
+
+    private function get_ten()
+    {
+        $data = [];
+
+        if(Cache::has("ten"))
+        {
+            $data["quotes"] = Cache::get("ten");
+
+            $this->flag_cache($data);
+        }
+        else
+        {
+            $quotes = $this->getRandomQuotes(10);
+
+            $data["quotes"] = $quotes;
+
+            Cache::put("ten", $quotes, intval(env("DEFAULT_CACHE_TTL")));
+        }
+
+        return $data;
+    }
+
+    public function api_ten()
+    {
+        return (empty(Auth::user())) ? [] : $this->get_ten();
+    }
+
+    public function api_ten_new()
+    {
+        Cache::forget("ten");
+
+        return $this->api_ten();
+    }
+
+    private function flag_cache(&$data)
+    {
+        foreach($data["quotes"] as $key => $value)
+        {
+            $quote_data = json_decode($data["quotes"][$key]["data"], true);
+
+            $quote_data["q"] = "[cached] " . $quote_data["q"];
+
+            $data["quotes"][$key]["data"] = json_encode($quote_data);
+        }
     }
 }
