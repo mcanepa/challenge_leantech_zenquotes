@@ -148,7 +148,15 @@ class QuoteController extends Controller
 
     public function api_five()
     {
-        return $this->get_five();
+        $data = $this->get_five();
+
+        $this->decode_quote_data($data);
+
+        $quotes_data = array_column($data["quotes"], "data");
+
+        $quotes = array_column($quotes_data, "q");
+
+        return $quotes;
     }
 
     public function api_five_new()
@@ -182,7 +190,20 @@ class QuoteController extends Controller
 
     public function api_ten()
     {
-        return (empty(Auth::user())) ? [] : $this->get_ten();
+        if((empty(Auth::user())))
+        {
+            return [];
+        }
+
+        $data = $this->get_ten();
+
+        $this->decode_quote_data($data);
+
+        $quotes_data = array_column($data["quotes"], "data");
+
+        $quotes = array_column($quotes_data, "q");
+
+        return $quotes;
     }
 
     public function api_ten_new()
@@ -201,6 +222,14 @@ class QuoteController extends Controller
             $quote_data["q"] = "[cached] " . $quote_data["q"];
 
             $data["quotes"][$key]["data"] = json_encode($quote_data);
+        }
+    }
+
+    private function decode_quote_data(&$data)
+    {
+        foreach($data["quotes"] as $key => $value)
+        {
+            $data["quotes"][$key]["data"] = json_decode($data["quotes"][$key]["data"], true);
         }
     }
 }
