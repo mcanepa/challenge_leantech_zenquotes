@@ -13,4 +13,9 @@ class Quote extends Model
         'hash',
         'data',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_quote');
+    }
 }
