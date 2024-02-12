@@ -103,7 +103,7 @@ http://127.0.0.1:8000
 
 And that's it!!
 
-You can register as a new user and then go to `http://127.0.0.1:8000/today` to see an inpirational quote!!!
+You can register as a new user and then go to `http://127.0.0.1:8000/today` to see an inspirational quote!!!
 
 ## Tests
 
@@ -113,4 +113,4 @@ You could test the app by running
 php artisan test --testSuite=Unit
 ```
 
-P.S.: More tests comming soon!
+P.S.: More tests coming soon!
