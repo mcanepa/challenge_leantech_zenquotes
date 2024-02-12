@@ -11,7 +11,7 @@ Below are the instructions to install and run the project...
 
 ## Before we begin...
 
-Make sure you have already installed git, composer and php >= 8.2 (with sqlite support)
+Make sure you have already installed git, composer, node >= 18.19 and php >= 8.2 (with sqlite support)
 
 ## Step 1: Clone the repository
 
@@ -45,13 +45,15 @@ Now, generate an application key
 php artisan key:generate
 ```
 
-## Step 4: Create database and table
+## Step 4: Create database and tables
 
 Run
 
 ```
-php artisan migrate:fresh --seed
+php artisan migrate
 ```
+
+It will prompt you to create the database, answer YES
 
 Now edit `.env` file and change
 
@@ -65,15 +67,35 @@ to
 CACHE_DRIVER=database
 ```
 
+And we are ready to seed the database with some data!!
+
+```
+php artisan migrate:fresh --seed
+```
+
 ## Step 5: Run the project
 
-Execute
+We are closer to see the app!! just a couple commands...
+
+Run
+
+```
+npm install
+```
+
+and then
+
+```
+npm run build
+```
+
+And yes, we finally serve the project!!
 
 ```
 php artisan serve
 ```
 
-Go to the browser at
+And go to the browser at
 
 ```
 http://127.0.0.1:8000
