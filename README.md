@@ -9,14 +9,6 @@ This challenge will probe why you should hire me =)
 
 Below are the instructions to install and run the project...
 
-Quick Access:
-
-- [Clone the repository](#step-1)
-- [Installation](#step-2)
-- [Environment file](#step-3)
-- [Databse creation](#step-4)
-- [Running the project](#step-5)
-
 ## Before we begin...
 
 Make sure you have already installed git, composer, node >= 18.19 and php >= 8.2 (with sqlite support)
