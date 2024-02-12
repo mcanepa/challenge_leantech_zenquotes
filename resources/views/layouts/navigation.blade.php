@@ -21,6 +21,15 @@
                     <x-nav-link :href="route('quote.ten')" :active="request()->routeIs('quote.ten')">
                         {{ __('Ten quotes') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('quote.favorite-quotes')" :active="request()->routeIs('quote.favorite-quotes')">
+                        {{ __('My Favorites') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('quote.report')" :active="request()->routeIs('quote.report')">
+                        {{ __('Report') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('quote.test')" :active="request()->routeIs('quote.test')">
+                        {{ __('API Test') }}
+                    </x-nav-link>
                 </div>
             </div>
 

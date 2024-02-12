@@ -232,4 +232,9 @@ class QuoteController extends Controller
             $data["quotes"][$key]["data"] = json_decode($data["quotes"][$key]["data"], true);
         }
     }
+
+    public function test()
+    {
+        return view("quotes.test");
+    }
 }

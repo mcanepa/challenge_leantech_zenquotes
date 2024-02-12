@@ -40,5 +40,6 @@ Route::get("quotes/new", [QuoteController::class, "five_new"])->name("quote.five
 Route::get("secure-quotes", [QuoteController::class, "ten"])->name("quote.ten")->middleware('host');
 Route::get("secure-quotes/new", [QuoteController::class, "ten_new"])->name("quote.ten-new");
 Route::get("report-favorite-quotes", [QuoteController::class, "report"])->name("quote.report")->middleware('host');
+Route::get("api-test", [QuoteController::class, "test"])->name("quote.test");
 
 require __DIR__.'/auth.php';
